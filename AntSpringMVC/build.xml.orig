@@ -39,11 +39,6 @@
 	<target name="compile" depends="init, resolve" description="compile source code">
 		<mkdir dir="${web.classes.dir}" />
 		<javac destdir="${web.classes.dir}" source="${jdk.version}" target="${jdk.version}" debug="true" includeantruntime="false" classpathref="compile.path">
- 	               <classpath>
-				<fileset dir="lib">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
 			<src path="${src.dir}" />
 		</javac>
 	</target>
@@ -122,29 +117,6 @@
 		<delete dir="${target.dir}" />
 		<delete dir="${report.dir}" />
 	</target>
-
-	<target name="jacoco" depends="compile,junit">
-                <!-- Import JaCoCo Ant tasks -->
-                <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-                  <classpath path="lib/jacocoant.jar" />
-                </taskdef>
-
-                 <jacoco:coverage destfile="target/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant">
-                  <junit fork="yes" dir="${basedir}">
-                   <classpath location="${web.classes.dir}" />
-                   <classpath refid="compile.path" />
-                   <classpath refid="test.path" />
-
-                   <formatter type="xml" />
-                   <batchtest todir="${report.dir}">
-                   <fileset dir="${src.dir}">
-                    <include name="**/*Test*.java" />
-                   </fileset>
-                  </batchtest>
-                 </junit>
-                </jacoco:coverage>
-         </target>
-
 
 	<target name="main" depends="package" />
 
